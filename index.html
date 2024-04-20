@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input[type="number"], select {
+      width: 100px;
+      margin: 5px;
+    }
+    button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h3>Temperature Converter</h3>
+  <div>
+    <label for="inputValue">Enter value:</label>
+    <input type="number" id="inputValue" step="0.01">
+  </div>
+  <div>
+    <label for="conversionType">Convert:</label>
+    <select id="conversionType">
+      <option value="celsiusToFahrenheit">Celsius to Fahrenheit</option>
+      <option value="fahrenheitToCelsius">Fahrenheit to Celsius</option>
+    </select>
+  </div>
+  <button onclick="convert()">Convert</button>
+  <p id="result"></p>
+
+  <script>
+    // Function to call the server-side convertTemperature function
+    function convert() {
+      var inputValue = document.getElementById('inputValue').value;
+      var conversionType = document.getElementById('conversionType').value;
+      
+      // Call the Apps Script function convertTemperature
+      google.script.run
+        .withSuccessHandler(displayResult)
+        .convertTemperature(parseFloat(inputValue), conversionType);
+    }
+
+    // Function to display the conversion result
+    function displayResult(result) {
+      var resultElement = document.getElementById('result');
+      resultElement.innerHTML = 'Result: ' + result;
+    }
+  </script>
+</body>
+</html>
